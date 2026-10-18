@@ -1,0 +1,172 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei',
+    Arial, sans-serif;
+  font-size: 14px;
+  color: #303133;
+  background-color: #f5f7fa;
+}
+
+a {
+  color: #409eff;
+  text-decoration: none;
+}
+
+/* 页面通用容器 */
+.page-container {
+  padding: 16px;
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ============================================================
+   以下为本次体验升级「新增」的全局样式（原样式保持不变）
+   主题：商务企业后台，主色统一 + 全局圆角 8px + 8px 间距栅格
+   ============================================================ */
+
+:root {
+  /* 主题色（新增） */
+  --app-color-primary: #2f6fed;
+  --app-color-success: #2ba471;
+  --app-color-warning: #e6a23c;
+  --app-color-danger: #e04c4c;
+  --app-color-info: #909399;
+
+  /* 全局圆角统一 8px（新增） */
+  --app-radius-base: 8px;
+  --app-radius-lg: 12px;
+
+  /* 8px 间距栅格（新增） */
+  --app-space-1: 8px;
+  --app-space-2: 16px;
+  --app-space-3: 24px;
+  --app-space-4: 32px;
+
+  /* 文本 / 边框 / 背景（新增） */
+  --app-text-primary: #1f2329;
+  --app-text-regular: #4e5969;
+  --app-text-secondary: #86909c;
+  --app-border-color: #e5e6eb;
+  --app-bg-page: #f5f7fa;
+  --app-bg-card: #ffffff;
+}
+
+/* 覆盖 Element Plus 全局 CSS 变量：统一主色与圆角（新增） */
+:root {
+  --el-color-primary: var(--app-color-primary);
+  --el-color-primary-light-3: #6d9af2;
+  --el-color-primary-light-5: #97b7f6;
+  --el-color-primary-light-7: #c1d4fa;
+  --el-color-primary-light-8: #d5e2fc;
+  --el-color-primary-light-9: #eaf1fd;
+  --el-color-primary-dark-2: #2659be;
+  --el-border-radius-base: var(--app-radius-base);
+  --el-border-radius-small: 6px;
+}
+
+/* 卡片层级（新增）：统一圆角 + 轻阴影 */
+.el-card {
+  border-radius: var(--app-radius-base);
+  border: 1px solid var(--app-border-color);
+  box-shadow: 0 1px 2px rgba(31, 35, 41, 0.04);
+}
+
+.el-card__header {
+  padding: var(--app-space-2);
+  font-weight: 600;
+  color: var(--app-text-primary);
+  border-bottom: 1px solid var(--app-border-color);
+}
+
+/* 表格可读性（新增）：表头底色 + 斑马行，不改动原有模板 */
+.el-table th.el-table__cell {
+  background-color: #fafbfc;
+  color: var(--app-text-regular);
+  font-weight: 600;
+}
+
+.el-table .el-table__body-wrapper tbody tr:nth-child(even) > td.el-table__cell {
+  background-color: #fafbfc;
+}
+
+.el-table .el-table__body-wrapper tbody tr:hover > td.el-table__cell {
+  background-color: #eef4fe;
+}
+
+/* 通用工具类（新增） */
+.panel-card {
+  border-radius: var(--app-radius-base);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--app-space-1);
+  align-items: center;
+}
+
+/* 8px 栅格统计卡容器（新增） */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--app-space-2);
+}
+
+@media (max-width: 1200px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* 状态标签统一标准色（新增）：待审批橙 / 已通过绿 / 已驳回红 / 已取消灰 */
+.status-tag {
+  border-radius: 4px;
+}
+
+.status-tag--pending {
+  color: var(--app-color-warning);
+  background-color: #fdf6ec;
+  border-color: #f5dab1;
+}
+
+.status-tag--pass {
+  color: var(--app-color-success);
+  background-color: #e8f6f0;
+  border-color: #b7e2d1;
+}
+
+.status-tag--reject {
+  color: var(--app-color-danger);
+  background-color: #fdeceb;
+  border-color: #f5c2bf;
+}
+
+.status-tag--cancel {
+  color: var(--app-color-info);
+  background-color: #f4f4f5;
+  border-color: #dcdde0;
+}

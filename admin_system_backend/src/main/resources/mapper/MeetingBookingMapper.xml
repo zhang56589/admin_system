@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.adminsystem.mapper.MeetingBookingMapper">
+
+    <resultMap id="BookingVOResultMap" type="com.example.adminsystem.vo.BookingVO">
+        <id column="id" property="id"/>
+        <result column="room_id" property="roomId"/>
+        <result column="room_name" property="roomName"/>
+        <result column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="status" property="resStatus"/>
+        <result column="reject_reason" property="rejectReason"/>
+        <result column="title" property="title"/>
+        <result column="reason" property="reason"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 管理员预约分页（支持roomId、状态筛选） -->
+    <select id="selectAdminBookingPage" resultMap="BookingVOResultMap">
+        SELECT
+        mb.id,
+        mb.room_id,
+        mr.room_name,
+        mb.user_id,
+        su.username,
+        mb.start_time,
+        mb.end_time,
+        mb.status,
+        mb.reject_reason,
+        mb.title,
+        mb.reason,
+        mb.create_time
+        FROM meeting_booking mb
+        LEFT JOIN meeting_room mr ON mb.room_id = mr.id
+        LEFT JOIN sys_user su ON mb.user_id = su.id
+        <where>
+            <if test="roomId != null">
+                mb.room_id = #{roomId}
+            </if>
+            <if test="resStatus != null">
+                AND mb.status = #{resStatus}
+            </if>
+        </where>
+        ORDER BY mb.create_time DESC
+    </select>
+
+    <!-- 用户个人预约分页（支持筛选） -->
+    <select id="selectUserBookingPage" resultMap="BookingVOResultMap">
+        SELECT
+        mb.id,
+        mb.room_id,
+        mr.room_name,
+        mb.user_id,
+        su.username,
+        mb.start_time,
+        mb.end_time,
+        mb.status,
+        mb.reject_reason,
+        mb.title,
+        mb.reason,
+        mb.create_time
+        FROM meeting_booking mb
+        LEFT JOIN meeting_room mr ON mb.room_id = mr.id
+        LEFT JOIN sys_user su ON mb.user_id = su.id
+        <where>
+            mb.user_id = #{userId}
+            <if test="roomId != null">
+                AND mb.room_id = #{roomId}
+            </if>
+            <if test="resStatus != null">
+                AND mb.status = #{resStatus}
+            </if>
+        </where>
+        ORDER BY mb.create_time DESC
+    </select>
+
+    <select id="selectBookingVOPage" resultMap="BookingVOResultMap">
+        SELECT
+        mb.id,
+        mb.room_id,
+        mr.room_name,
+        mb.user_id,
+        su.username,
+        mb.start_time,
+        mb.end_time,
+        mb.status,
+        mb.reject_reason,
+        mb.title,
+        mb.reason,
+        mb.create_time
+        FROM meeting_booking mb
+        LEFT JOIN meeting_room mr ON mb.room_id = mr.id
+        LEFT JOIN sys_user su ON mb.user_id = su.id
+        <where>
+            <if test="dto != null and dto.roomId != null">
+                mb.room_id = #{dto.roomId}
+            </if>
+            <if test="dto != null and dto.resStatus != null">
+                AND mb.status = #{dto.resStatus}
+            </if>
+            <if test="dto != null and dto.startTime != null">
+                AND mb.start_time &gt;= #{dto.startTime}
+            </if>
+            <if test="dto != null and dto.endTime != null">
+                AND mb.end_time &lt;= #{dto.endTime}
+            </if>
+        </where>
+        ORDER BY mb.create_time DESC
+    </select>
+
+    <select id="selectUserBookingVOPage" resultMap="BookingVOResultMap">
+        SELECT
+        mb.id,
+        mb.room_id,
+        mr.room_name,
+        mb.user_id,
+        su.username,
+        mb.start_time,
+        mb.end_time,
+        mb.status,
+        mb.reject_reason,
+        mb.title,
+        mb.reason,
+        mb.create_time
+        FROM meeting_booking mb
+        LEFT JOIN meeting_room mr ON mb.room_id = mr.id
+        LEFT JOIN sys_user su ON mb.user_id = su.id
+        <where>
+            mb.user_id = #{userId}
+            <if test="dto != null and dto.roomId != null">
+                AND mb.room_id = #{dto.roomId}
+            </if>
+            <if test="dto != null and dto.resStatus != null">
+                AND mb.status = #{dto.resStatus}
+            </if>
+            <if test="dto != null and dto.startTime != null">
+                AND mb.start_time &gt;= #{dto.startTime}
+            </if>
+            <if test="dto != null and dto.endTime != null">
+                AND mb.end_time &lt;= #{dto.endTime}
+            </if>
+        </where>
+        ORDER BY mb.create_time DESC
+    </select>
+
+</mapper>
